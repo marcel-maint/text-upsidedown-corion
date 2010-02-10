@@ -4,8 +4,8 @@ use warnings;
 use strict;
 use charnames ':full';
 use Exporter qw(import);
-our $VERSION = '0.03';
-our @EXPORT  = ('upside_down');
+our $VERSION = '0.04';
+our @EXPORT  = ('upside_down','umop_apisdn');
 
 # mapping taken from
 # http://www.fileformat.info/convert/text/upside-down-map.htm
@@ -79,6 +79,24 @@ sub upside_down {
     $text =~ s/(.)/ exists $upside_down_map{$1} ? $upside_down_map{$1} : $1/ge;
     join '' => reverse split '', $text;
 }
+*umop_apisdn = \&upside_down;
+
+# Also add UTF-8 version to enable writing code upside down
+{ no strict 'refs';
+    *{ "u"
+     . "\N{LATIN SMALL LETTER TURNED W}"
+     . "o"
+     . "p"
+     . "_"
+     . "\N{LATIN SMALL LETTER TURNED E}"
+     . "p"
+     . "\N{LATIN SMALL LETTER DOTLESS I}"
+     . "s"
+     . "d"
+     . "\N{LATIN SMALL LETTER TURNED A}"
+     } = \&upside_down;
+}
+
 1;
 __END__
 
